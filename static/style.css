@@ -1,0 +1,302 @@
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 10px; /* Reduced padding */
+}
+
+.container {
+    max-width: 1800px; /* Increased max-width for more content */
+    margin: auto;
+    background: #fff;
+    padding: 15px; /* Reduced padding */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #444;
+    text-align: center;
+    font-size: 2em; /* Slightly reduced font size */
+    margin-bottom: 15px; /* Reduced margin */
+}
+
+/* New styles for table-like layout */
+.kanban-table {
+    display: grid;
+    /* First column for owners, then 4 columns for statuses */
+    grid-template-columns: 120px repeat(4, 1fr);
+    gap: 1px; /* Small gap for borders */
+    border: 1px solid #ccc;
+    background-color: #eee; /* Background for grid lines */
+}
+
+.kanban-table-header,
+.kanban-table-cell {
+    padding: 10px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid #eee; /* Cell borders */
+}
+
+.kanban-table-header {
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
+
+.kanban-table-owner-cell {
+    justify-content: center;
+    font-weight: bold;
+    background-color: #f9f9f9;
+    position: relative; /* Enable absolute positioning for children */
+    align-items: center; /* Align content to the top-left */
+    flex-direction: column; /* Stack content vertically */
+}
+
+.kanban-table-owner-cell .resolved-bugs-count {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 0.7em;
+    color: #666;
+    font-weight: normal;
+}
+
+.kanban-table-status-column {
+    min-height: 100px; /* Ensure columns have some height */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+}
+
+.kanban-table-status-column.drag-over {
+    background-color: #e0e0e0;
+    border: 2px dashed #007bff;
+}
+
+.kanban-table .task {
+    width: 280px; /* Allow task to take natural width within cell */
+    margin: 0; /* Remove margin from tasks within cells */
+}
+
+.kanban-table .status-title {
+    display: none; /* Hide individual status titles in table view */
+}
+
+.kanban-table .status-column {
+    width: auto; /* Remove fixed width */
+    background-color: transparent; /* Remove background */
+    padding: 0; /* Remove padding */
+}
+
+.kanban-table .owner-board {
+    flex: none; /* Remove flex properties */
+    margin-bottom: 0;
+    padding: 0;
+    border: none;
+}
+
+.kanban-table .owner-title {
+    display: none; /* Hide owner title as it's in the cell */
+}
+
+.kanban-table .kanban-board {
+    display: contents; /* Make children direct grid items */
+}
+
+.kanban-table-header.status-header-to-do {
+    background-color: #ffc107;
+    color: white;
+}
+.kanban-table-header.status-header-in-progress {
+    background-color: #007bff;
+    color: white;
+}
+.kanban-table-header.status-header-stalled {
+    background-color: #dc3545;
+    color: white;
+}
+.kanban-table-header.status-header-done {
+    background-color: #28a745;
+    color: white;
+}
+
+.task {
+    background: #fff;
+    padding: 8px 10px; /* Reduced padding */
+    margin-top: 8px; /* Reduced margin */
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the start */
+}
+
+.task.selected {
+    border: 2px solid #007bff; /* Highlight selected task */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Add a glow effect */
+}
+
+.task .details {
+    flex-grow: 1;
+    margin-right: 0; /* No right margin needed for stacked layout */
+    width: 100%; /* Take full width */
+}
+
+.task .details h4 {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7em;
+}
+
+.task-date-display {
+    font-size: 0.75em;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.task-date-display input[type="date"] {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 0 2px;
+    font-size: 0.7em;
+    width: 80px;
+}
+
+.task .owner {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.actions {
+    width: 100%; /* Take full width */
+    margin-top: 5px; /* Added margin for spacing */
+}
+
+.status-dropdown {
+    width: 100%; /* Make dropdown take full width */
+    padding: 3px 5px; /* Reduced padding */
+    border-radius: 3px; /* Slightly smaller border-radius */
+    font-size: 0.85em; /* Reduced font size */
+}
+
+.add-task-form {
+    margin-top: 20px; /* Reduced margin */
+    padding-top: 15px; /* Reduced padding */
+    border-top: 1px solid #ddd;
+}
+
+#addTaskForm input[type="text"] {
+    width: calc(50% - 15px); /* Adjusted width */
+    padding: 8px; /* Reduced padding */
+    margin-right: 8px; /* Reduced margin */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9em; /* Reduced font size */
+}
+
+#addTaskForm button {
+    padding: 8px 15px; /* Reduced padding */
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em; /* Reduced font size */
+}
+
+.add-task-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Drag and Drop Styles */
+.task.dragging {
+    opacity: 0.5;
+    border: 2px dashed #007bff;
+}
+
+.status-column.drag-over {
+    background-color: #e0e0e0;
+    border: 2px dashed #007bff;
+}
+
+.global-history-section {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.global-history-section h2 {
+    color: #0056b3;
+    border-bottom: 1px solid #007bff;
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+#globalHistoryContent p {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #eee;
+    font-size: 0.9em;
+}
+
+.global-history-section p:last-child {
+    border-bottom: none;
+}
+
+.unassigned-tasks-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+}
+
+.unassigned-tasks-section .task {
+    width: calc(
+        100% - 10px
+    ); /* Adjust for padding/margin within the unassigned column */
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .kanban-table {
+        grid-template-columns: 1fr; /* Stack columns on small screens */
+    }
+
+    .kanban-table-header {
+        display: none; /* Hide status headers on small screens */
+    }
+
+    .kanban-table-owner-cell {
+        grid-column: 1 / -1; /* Span full width */
+        background-color: #e0e0e0;
+        margin-top: 10px;
+    }
+
+    .kanban-table-status-column {
+        grid-column: 1 / -1; /* Span full width */
+        border: 1px solid #eee;
+        margin-bottom: 10px;
+    }
+
+    #addTaskForm input[type="text"] {
+        width: calc(100% - 16px);
+        margin-bottom: 8px;
+    }
+}

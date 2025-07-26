@@ -1,0 +1,5 @@
+/tmp/*
+tasks.json
+task_history.json
+tasks
+.env
