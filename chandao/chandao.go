@@ -12,11 +12,12 @@ import (
 	"github.com/robfig/cron"
 )
 
-var bugs map[string]int
+var resolvedCounts map[string]int
+var unresolvedCounts map[string]int
 
 func setBugs() {
 	var err error
-	bugs, err = getBugs()
+	resolvedCounts, unresolvedCounts, err = getBugs()
 	if err != nil {
 		log.Fatalln("获取禅道信息失败")
 	}
@@ -31,8 +32,8 @@ func init() {
 	c.Start()
 }
 
-func GetBugs() map[string]int {
-	return bugs
+func GetBugs() (map[string]int, map[string]int) {
+	return resolvedCounts, unresolvedCounts
 }
 
 func getToken() (string, error) {
@@ -57,7 +58,7 @@ func getToken() (string, error) {
 	return tokenResp.Token, nil
 }
 
-func getBugs() (map[string]int, error) {
+func getBugs() (map[string]int, map[string]int, error) {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", config.CHANDAO_HOST+"/api.php/v1/products/1/bugs?limit=100000&status=all", nil)
 	if err != nil {
@@ -66,7 +67,7 @@ func getBugs() (map[string]int, error) {
 	req.Header.Add("Content-Type", "application/json")
 	token, err := getToken()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	req.Header.Add("Token", token)
 	resp, err := client.Do(req)
@@ -77,7 +78,7 @@ func getBugs() (map[string]int, error) {
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	type BugResp struct {
@@ -85,18 +86,23 @@ func getBugs() (map[string]int, error) {
 			ResolvedBy struct {
 				RealName string `json:"realname"`
 			} `json:"resolvedBy"`
+			AssignedTo struct {
+				RealName string `json:"realname"`
+			} `json:"assignedTo"`
 		} `json:"bugs"`
 	}
 	var bugResp BugResp
 	err = json.Unmarshal(body, &bugResp)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	statusCounts := make(map[string]int)
+	resolvedCounts := make(map[string]int)
+	unresolvedCounts := make(map[string]int)
 	for _, bug := range bugResp.Bugs {
-		statusCounts[bug.ResolvedBy.RealName]++
+		resolvedCounts[bug.ResolvedBy.RealName]++
+		unresolvedCounts[bug.AssignedTo.RealName]++
 	}
 
-	return statusCounts, nil
+	return resolvedCounts, unresolvedCounts, nil
 }

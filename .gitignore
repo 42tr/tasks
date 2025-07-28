@@ -3,3 +3,4 @@ tasks.json
 task_history.json
 tasks
 .env
+**/.DS_Store

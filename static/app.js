@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
       const tasks = await apiFetch("/api/tasks");
       const bugs = await apiFetch("/api/bugs");
-      renderTasks(tasks || [], bugs || []);
+      renderTasks(tasks || [], bugs || {});
       await fetchAllHistory();
     } catch (error) {
       console.error("Error fetching tasks:", error);
@@ -80,10 +80,13 @@ document.addEventListener("DOMContentLoaded", async function () {
       const ownerCell = document.createElement("div");
       ownerCell.className = "kanban-table-cell kanban-table-owner-cell";
       console.log(bugs);
-      const ownerBugs = bugs[owner] || 0;
+      // const ownerBugs = bugs[owner] || 0;
+      const solvedBugs = bugs["resolved"][owner] || 0;
+      const unsolvedBugs = bugs["unresolved"][owner] || 0;
       ownerCell.innerHTML = `
                 <span>${owner}</span>
-                <div class="resolved-bugs-count">已解决 bug: ${ownerBugs}</div>
+                <div class="resolved-bugs-count" style="bottom: 20px;">待解决 bug: <span style="font-family: monospace; display: inline-block; width: 3ch; text-align: right;">${unsolvedBugs}</span></div>
+                <div class="resolved-bugs-count">已解决 bug: <span style="font-family: monospace; display: inline-block; width: 3ch; text-align: right;">${solvedBugs}</span></div><br>
             `;
       kanbanTable.appendChild(ownerCell);
 

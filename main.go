@@ -170,7 +170,11 @@ func main() {
 	})
 
 	r.GET("/api/bugs", func(c *gin.Context) {
-		c.JSON(http.StatusOK, chandao.GetBugs())
+		resolvedCounts, unresolvedCounts := chandao.GetBugs()
+		c.JSON(http.StatusOK, map[string]any{
+			"resolved":   resolvedCounts,
+			"unresolved": unresolvedCounts,
+		})
 	})
 
 	r.Run(":8084")

@@ -272,7 +272,6 @@ h1 {
     ); /* Adjust for padding/margin within the unassigned column */
 }
 
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .kanban-table {
