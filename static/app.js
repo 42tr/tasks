@@ -111,19 +111,28 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
         if (status === "Done" && tasksForStatus.length > 5) {
-          const showMoreButton = document.createElement("button");
-          showMoreButton.textContent = `显示全部 (${tasksForStatus.length})`;
-          showMoreButton.className = "show-more-button";
-
           const tasksToShow = tasksForStatus.slice(0, 5);
           tasksToShow.forEach((task) => {
             const taskElement = createTaskElement(task);
             column.appendChild(taskElement);
           });
 
-          column.appendChild(showMoreButton);
+          const showMoreContainer = document.createElement("div");
+          showMoreContainer.className = "show-more-container";
 
-          showMoreButton.addEventListener("click", () => {
+          const showMoreButton = document.createElement("button");
+          showMoreButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+          showMoreButton.className = "show-more-button";
+
+          const showMoreCount = document.createElement("span");
+          showMoreCount.className = "show-more-count";
+          showMoreCount.textContent = `${tasksForStatus.length - 5}`;
+
+          showMoreContainer.appendChild(showMoreButton);
+          showMoreContainer.appendChild(showMoreCount);
+          column.appendChild(showMoreContainer);
+
+          showMoreContainer.addEventListener("click", () => {
             column.innerHTML = ""; // Clear the column
             tasksForStatus.forEach((task) => {
               const taskElement = createTaskElement(task);

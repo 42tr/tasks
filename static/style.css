@@ -292,26 +292,49 @@ h1 {
         grid-column: 1 / -1; /* Span full width */
         border: 1px solid #eee;
         margin-bottom: 10px;
-.show-more-button {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: #333;
-    cursor: pointer;
-    display: block;
-    margin: 10px auto;
-    padding: 5px 10px;
-    text-align: center;
-    width: fit-content;
-}
-
-.show-more-button:hover {
-    background-color: #e0e0e0;
-}
     }
 
     #addTaskForm input[type="text"] {
         width: calc(100% - 16px);
         margin-bottom: 8px;
     }
+}
+
+.show-more-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+}
+
+.show-more-container:hover {
+    background-color: #f0f0f0;
+}
+
+.show-more-button {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    padding: 0;
+}
+
+.show-more-button svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s;
+}
+
+.show-more-container:hover .show-more-button svg {
+    transform: translateY(2px);
+}
+
+.show-more-count {
+    margin-left: 8px;
+    font-size: 0.9em;
+    color: #666;
+    font-weight: bold;
 }
