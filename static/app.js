@@ -104,10 +104,38 @@ document.addEventListener("DOMContentLoaded", async function () {
           (groupedByOwnerAndStatus[owner] &&
             groupedByOwnerAndStatus[owner][status]) ||
           [];
-        tasksForStatus.forEach((task) => {
-          const taskElement = createTaskElement(task);
-          column.appendChild(taskElement);
+        tasksForStatus.sort((a, b) => {
+          if (!a.endTime) return 1;
+          if (!b.endTime) return -1;
+          return new Date(b.endTime) - new Date(a.endTime);
         });
+
+        if (status === "Done" && tasksForStatus.length > 5) {
+          const showMoreButton = document.createElement("button");
+          showMoreButton.textContent = `显示全部 (${tasksForStatus.length})`;
+          showMoreButton.className = "show-more-button";
+
+          const tasksToShow = tasksForStatus.slice(0, 5);
+          tasksToShow.forEach((task) => {
+            const taskElement = createTaskElement(task);
+            column.appendChild(taskElement);
+          });
+
+          column.appendChild(showMoreButton);
+
+          showMoreButton.addEventListener("click", () => {
+            column.innerHTML = ""; // Clear the column
+            tasksForStatus.forEach((task) => {
+              const taskElement = createTaskElement(task);
+              column.appendChild(taskElement);
+            });
+          });
+        } else {
+          tasksForStatus.forEach((task) => {
+            const taskElement = createTaskElement(task);
+            column.appendChild(taskElement);
+          });
+        }
         kanbanTable.appendChild(column);
       });
     });

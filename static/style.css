@@ -292,6 +292,22 @@ h1 {
         grid-column: 1 / -1; /* Span full width */
         border: 1px solid #eee;
         margin-bottom: 10px;
+.show-more-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
+    padding: 5px 10px;
+    text-align: center;
+    width: fit-content;
+}
+
+.show-more-button:hover {
+    background-color: #e0e0e0;
+}
     }
 
     #addTaskForm input[type="text"] {
