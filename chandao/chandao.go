@@ -9,7 +9,7 @@ import (
 	"strings"
 	"tasks/config"
 
-	"github.com/robfig/cron"
+	"github.com/robfig/cron/v3"
 )
 
 var resolvedCounts map[string]int
@@ -26,7 +26,8 @@ func setBugs() {
 func init() {
 	setBugs()
 	c := cron.New()
-	c.AddFunc("0 0 * * * *", func() {
+	c.AddFunc("* * * * *", func() {
+		log.Println("Get bugs from chandao")
 		setBugs()
 	})
 	c.Start()

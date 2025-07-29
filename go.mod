@@ -6,7 +6,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.10.1
 	github.com/joho/godotenv v1.5.1
-	github.com/robfig/cron v1.2.0
+	github.com/robfig/cron/v3 v3.0.1
 )
 
 require (
