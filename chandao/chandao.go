@@ -19,7 +19,7 @@ func setBugs() {
 	var err error
 	resolvedCounts, unresolvedCounts, err = getBugs()
 	if err != nil {
-		log.Fatalln("获取禅道信息失败")
+		log.Println("获取禅道信息失败")
 	}
 }
 
